@@ -1,5 +1,10 @@
 export interface IInitialState {
-  loading: boolean;
+  loadingQuote: boolean;
+  quote?: {
+    name: string;
+    lastPrice: number;
+    pricedAt: Date;
+  };
 }
 
 export interface ResponseGenerator {

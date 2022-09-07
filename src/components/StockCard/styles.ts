@@ -11,7 +11,7 @@ export const Container = styled.View`
 `;
 
 export const StockNameContainer = styled.View`
-  width: 60px;
+  width: 100px;
   height: 100%;
   background-color: ${colors.tertiary};
   align-items: center;

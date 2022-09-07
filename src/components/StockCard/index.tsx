@@ -1,3 +1,4 @@
+import moment from "moment";
 import React from "react";
 
 // Styles
@@ -12,17 +13,19 @@ import {
 interface IStockCard {
   name: string;
   lastPrice: number;
-  pricedAt: string;
+  pricedAt: Date;
 }
 
 const StockCard: React.FC<IStockCard> = ({ name, lastPrice, pricedAt }) => {
+  const date = moment(pricedAt).format("DD/MM/yyyy");
+
   return (
     <Container>
       <StockNameContainer>
         <StockName>{name}</StockName>
       </StockNameContainer>
       <PriceText>{`$ ${lastPrice}`}</PriceText>
-      <DateText>{pricedAt}</DateText>
+      <DateText>{date}</DateText>
     </Container>
   );
 };

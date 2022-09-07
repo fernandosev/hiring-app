@@ -4,23 +4,39 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IInitialState } from "./types";
 
 const initialState = {
-  loading: false,
+  loadingQuote: false,
+  quote: undefined,
 } as IInitialState;
 
 const stock = createSlice({
   name: "stock",
   initialState,
   reducers: {
-    test(
+    quoteRequest(
       state,
       _action: PayloadAction<{
-        loading: boolean;
+        name: string;
       }>
     ) {
-      state.loading = _action.payload.loading;
+      state.loadingQuote = true;
+    },
+
+    quoteSuccess(
+      state,
+      _action: PayloadAction<{
+        quote: { name: string; lastPrice: number; pricedAt: Date };
+      }>
+    ) {
+      state.quote = _action.payload.quote;
+      state.loadingQuote = false;
+    },
+
+    quoteFailure(state, _action) {
+      state.loadingQuote = false;
+      state.quote = undefined;
     },
   },
 });
 
-export const { test } = stock.actions;
+export const { quoteRequest, quoteSuccess, quoteFailure } = stock.actions;
 export default stock.reducer;

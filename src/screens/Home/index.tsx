@@ -24,6 +24,7 @@ import {
   AddButton,
 } from "./styles";
 import { colors } from "~/styles";
+import { Alert } from "react-native";
 
 // @Types
 
@@ -55,6 +56,10 @@ const Home: React.FC = () => {
   //   setStocksToCompare(stocks);
   // };
 
+  const renderMessage = (title: string, body: string) => {
+    Alert.alert(title, body);
+  };
+
   return (
     <Container>
       <SearchStockContainer>
@@ -71,7 +76,7 @@ const Home: React.FC = () => {
           />
         </InputContainer>
         <SearchStockButton
-          onPress={() => dispatch(quoteRequest({ name: stock }))}
+          onPress={() => dispatch(quoteRequest({ name: stock, renderMessage }))}
         >
           <Icon name="magnify" color={colors.primary} size={30} />
         </SearchStockButton>

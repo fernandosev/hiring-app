@@ -16,6 +16,7 @@ const stock = createSlice({
       state,
       _action: PayloadAction<{
         name: string;
+        renderMessage: (title: string, body: string) => void;
       }>
     ) {
       state.loadingQuote = true;

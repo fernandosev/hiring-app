@@ -29,6 +29,7 @@ export const StockContainer = styled.View`
 export const SearchMessage = styled.Text`
   text-align: center;
   color: ${colors.grey3};
+  font-size: ${metrics.fontSizeMedium}px;
 `;
 
 export const AddStockButton = styled.TouchableOpacity`

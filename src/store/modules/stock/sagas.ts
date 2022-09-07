@@ -16,15 +16,16 @@ export function* getQuote({
 }: {
   payload: {
     name: string;
+    renderMessage: (title: string, body: string) => void;
   };
 }) {
   const {
     name,
+    renderMessage,
   }: {
     name: string;
+    renderMessage: (title: string, body: string) => void;
   } = payload;
-
-  console.log(API_BASE_URL);
 
   try {
     const response: ResponseGenerator = yield call(
@@ -45,7 +46,8 @@ export function* getQuote({
     );
   } catch (err: any) {
     yield put(quoteFailure({}));
-    console.log(err);
+
+    renderMessage("Error", err.response.data.message || "Server error");
   }
 }
 

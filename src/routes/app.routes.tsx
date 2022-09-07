@@ -114,7 +114,7 @@ export default function AppRoutes() {
               return (
                 <View style={styles.iconContainer}>
                   <Icon
-                    name="chart-bar"
+                    name="chart-line"
                     size={30}
                     color={
                       focused ? colors.primaryText : colors.whiteTransparent

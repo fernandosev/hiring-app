@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useEffect, useMemo } from "react";
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, LogBox } from "react-native";
 
 // Libs
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -31,6 +31,8 @@ const App: React.FC = () => {
   useEffect(() => {
     StatusBar.setBarStyle("light-content", true);
     setCustomText(customTextProps);
+
+    LogBox.ignoreLogs(["Require cycle: node_modules/victory"]);
   }, [customTextProps]);
 
   return (

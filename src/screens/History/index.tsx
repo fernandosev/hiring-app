@@ -39,60 +39,60 @@ const History: React.FC = () => {
 
   return (
     <Container>
-      <TextInput
-        autoCapitalize="none"
-        keyboardType="default"
-        autoCorrect={false}
-        onChangeText={setStock}
-        value={stock}
-        placeholder="Stock"
-        maxLength={10}
-        titleColor={colors.primary}
-      />
-
-      <TextInput
-        autoCapitalize="none"
-        keyboardType="numeric"
-        autoCorrect={false}
-        onChangeText={setStartDate}
-        mask={[/\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
-        value={startDate}
-        placeholder="Start Date - DD/MM/YYYY"
-        maxLength={10}
-        titleColor={colors.primary}
-      />
-
-      <TextInput
-        autoCapitalize="none"
-        keyboardType="numeric"
-        autoCorrect={false}
-        onChangeText={setEndDate}
-        mask={[/\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
-        value={endDate}
-        placeholder="End Date - DD/MM/YYYY"
-        maxLength={10}
-        titleColor={colors.primary}
-      />
-
-      <Button
-        name="Search"
-        action={
-          loadingHistory
-            ? undefined
-            : () =>
-                dispatch(
-                  historyRequest({
-                    name: stock,
-                    startDate,
-                    endDate,
-                    renderMessage,
-                  })
-                )
-        }
-        loading={loadingHistory}
-      />
-
       <ScrollContainer>
+        <TextInput
+          autoCapitalize="none"
+          keyboardType="default"
+          autoCorrect={false}
+          onChangeText={setStock}
+          value={stock}
+          placeholder="Stock"
+          maxLength={10}
+          titleColor={colors.primary}
+        />
+
+        <TextInput
+          autoCapitalize="none"
+          keyboardType="numeric"
+          autoCorrect={false}
+          onChangeText={setStartDate}
+          mask={[/\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
+          value={startDate}
+          placeholder="Start Date - DD/MM/YYYY"
+          maxLength={10}
+          titleColor={colors.primary}
+        />
+
+        <TextInput
+          autoCapitalize="none"
+          keyboardType="numeric"
+          autoCorrect={false}
+          onChangeText={setEndDate}
+          mask={[/\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
+          value={endDate}
+          placeholder="End Date - DD/MM/YYYY"
+          maxLength={10}
+          titleColor={colors.primary}
+        />
+
+        <Button
+          name="Search"
+          action={
+            loadingHistory
+              ? undefined
+              : () =>
+                  dispatch(
+                    historyRequest({
+                      name: stock,
+                      startDate,
+                      endDate,
+                      renderMessage,
+                    })
+                  )
+          }
+          loading={loadingHistory}
+        />
+
         <StockContainer>
           {loadingHistory && <SearchMessage>Loading Data</SearchMessage>}
           {!loadingHistory && !history && (

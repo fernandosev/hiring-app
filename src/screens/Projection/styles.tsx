@@ -7,7 +7,13 @@ export const Container = styled.View<{ backgorund?: string }>`
   margin-top: 60px;
 `;
 
-export const ScrollContainer = styled.ScrollView``;
+export const ScrollContainer = styled.ScrollView.attrs((props) => {
+  return {
+    contentContainerStyle: {
+      paddingBottom: 70,
+    },
+  };
+})``;
 
 export const StockContainer = styled.View`
   flex: 1;

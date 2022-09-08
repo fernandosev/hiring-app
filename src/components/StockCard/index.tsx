@@ -30,7 +30,7 @@ const StockCard: React.FC<IStockCard> = ({
       <StockNameContainer>
         <StockName>{name}</StockName>
       </StockNameContainer>
-      <PriceText numberOfLines={1}>{`$ ${price}`}</PriceText>
+      <PriceText numberOfLines={1}>{`$ ${price.toFixed(2)}`}</PriceText>
       <DateText>{date ? date : subtitle}</DateText>
     </Container>
   );

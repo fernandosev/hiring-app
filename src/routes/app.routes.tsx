@@ -48,6 +48,7 @@ export default function AppRoutes() {
         screenOptions={() => ({
           tabBarStyle: {
             backgroundColor: colors.primary,
+            height: 100,
           },
           headerShown: false,
         })}

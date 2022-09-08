@@ -19,6 +19,7 @@ import {
   LabelText,
 } from "./styles";
 import { colors } from "~/styles";
+import { Alert } from "react-native";
 
 interface IStackChart {
   startDate: Date;
@@ -68,9 +69,72 @@ const StockHistoryChart: React.FC<IStackChart> = ({
         }
       >
         <VictoryStack colorScale={[lowColor, closingColor, hightColor]}>
-          <VictoryBar data={lowData} />
-          <VictoryBar data={closingData} />
-          <VictoryBar data={hightData} />
+          <VictoryBar
+            barWidth={15}
+            data={lowData}
+            events={[
+              {
+                target: "data",
+                eventHandlers: {
+                  onPress: (evt, pressedProps) => {
+                    const index = pressedProps.index;
+                    const date = lowData[index].x;
+                    const price = lowData[index].y;
+                    Alert.alert(
+                      "Low price",
+                      `Date: ${moment(date).format(
+                        "DD/MM/yyyy"
+                      )}\nPrice: ${price}`
+                    );
+                  },
+                },
+              },
+            ]}
+          />
+          <VictoryBar
+            barWidth={15}
+            data={closingData}
+            events={[
+              {
+                target: "data",
+                eventHandlers: {
+                  onPress: (evt, pressedProps) => {
+                    const index = pressedProps.index;
+                    const date = closingData[index].x;
+                    const price = closingData[index].y;
+                    Alert.alert(
+                      "Closing price",
+                      `Date: ${moment(date).format(
+                        "DD/MM/yyyy"
+                      )}\nPrice: ${price}`
+                    );
+                  },
+                },
+              },
+            ]}
+          />
+          <VictoryBar
+            barWidth={15}
+            data={hightData}
+            events={[
+              {
+                target: "data",
+                eventHandlers: {
+                  onPress: (evt, pressedProps) => {
+                    const index = pressedProps.index;
+                    const date = hightData[index].x;
+                    const price = hightData[index].y;
+                    Alert.alert(
+                      "Hight price",
+                      `Date: ${moment(date).format(
+                        "DD/MM/yyyy"
+                      )}\nPrice: ${price}`
+                    );
+                  },
+                },
+              },
+            ]}
+          />
         </VictoryStack>
       </VictoryChart>
 

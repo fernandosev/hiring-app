@@ -7,7 +7,7 @@ export default {
   secondaryText: "#000000",
 
   success: "#00E2C0",
-  info: "#22DAE5",
+  info: "#1E90FF",
   warning: "#FF9A23",
   danger: "#DC2E58",
 

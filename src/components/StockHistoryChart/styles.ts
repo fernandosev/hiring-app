@@ -1,7 +1,9 @@
 import styled from "styled-components/native";
 import { colors, metrics } from "~/styles";
 
-export const Container = styled.View``;
+export const Container = styled.View`
+  margin-top: -120px;
+`;
 
 export const LabelsContainer = styled.View`
   padding: ${metrics.basePadding}px;

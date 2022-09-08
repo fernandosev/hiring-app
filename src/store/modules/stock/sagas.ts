@@ -1,12 +1,19 @@
 // Libs
-import { API_BASE_URL } from "@env";
+import moment from "moment";
 import { takeLatest, put, all, call } from "redux-saga/effects";
 
 // API
 import { api } from "~/services/api";
 
 // Store
-import { quoteFailure, quoteRequest, quoteSuccess } from "./slice";
+import {
+  historyFailure,
+  historyRequest,
+  historySuccess,
+  quoteFailure,
+  quoteRequest,
+  quoteSuccess,
+} from "./slice";
 
 // Types
 import { ResponseGenerator } from "./types";
@@ -51,4 +58,80 @@ export function* getQuote({
   }
 }
 
-export default all([takeLatest(quoteRequest, getQuote)]);
+export function* getHistory({
+  payload,
+}: {
+  payload: {
+    name: string;
+    startDate: string;
+    endDate: string;
+    renderMessage: (title: string, body: string) => void;
+  };
+}) {
+  const {
+    name,
+    startDate,
+    endDate,
+    renderMessage,
+  }: {
+    name: string;
+    startDate: string;
+    endDate: string;
+    renderMessage: (title: string, body: string) => void;
+  } = payload;
+
+  try {
+    const start = moment(startDate, "DD/MM/yyyy");
+    const end = moment(endDate, "DD/MM/yyyy");
+
+    const startString = moment(start).format("yyyy-MM-DD");
+    const endString = moment(end).format("yyyy-MM-DD");
+
+    const response: ResponseGenerator = yield call(
+      api.get,
+      `stocks/${name}/history`,
+      {
+        params: {
+          from: startString,
+          to: endString,
+        },
+      }
+    );
+
+    const data = response.data;
+
+    const prices = data.prices;
+
+    const hightData: { x: Date; y: number }[] = [];
+    const closingData: { x: Date; y: number }[] = [];
+    const lowData: { x: Date; y: number }[] = [];
+
+    for (const price of prices) {
+      hightData.push({ x: new Date(price.pricedAt), y: price.high });
+      closingData.push({ x: new Date(price.pricedAt), y: price.closing });
+      lowData.push({ x: new Date(price.pricedAt), y: price.low });
+    }
+
+    yield put(
+      historySuccess({
+        history: {
+          startDate: start.toDate(),
+          endDate: end.toDate(),
+          name: data.name,
+          hightData: hightData.reverse(),
+          closingData: closingData.reverse(),
+          lowData: lowData.reverse(),
+        },
+      })
+    );
+  } catch (err: any) {
+    yield put(historyFailure({}));
+
+    renderMessage("Error", err.response.data.message || "Server error");
+  }
+}
+
+export default all([
+  takeLatest(quoteRequest, getQuote),
+  takeLatest(historyRequest, getHistory),
+]);

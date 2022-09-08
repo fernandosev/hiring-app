@@ -3,10 +3,17 @@ import { colors, metrics } from "~/styles";
 
 export const Container = styled.SafeAreaView<{ backgorund?: string }>`
   flex: 1;
-  margin: ${metrics.basePadding}px;
 `;
 
-export const ScrollContainer = styled.ScrollView``;
+export const ScrollContainer = styled.ScrollView.attrs((props) => {
+  return {
+    contentContainerStyle: {
+      paddingBottom: 70,
+    },
+  };
+})`
+  padding: ${metrics.basePadding}px;
+`;
 
 export const SearchStockContainer = styled.View`
   flex-direction: row;
@@ -32,6 +39,7 @@ export const SearchMessage = styled.Text`
   text-align: center;
   color: ${colors.grey3};
   font-size: ${metrics.fontSizeMedium}px;
+  margin-top: 50px;
 `;
 
 export const AddStockButton = styled.TouchableOpacity`

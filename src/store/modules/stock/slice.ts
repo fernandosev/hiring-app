@@ -7,6 +7,8 @@ const initialState = {
   loadingQuote: false,
   loadingHistory: false,
   loadingProjection: false,
+  loadingStocksToCompare: false,
+  stocksToCompare: undefined,
   quote: undefined,
   history: undefined,
   projection: undefined,
@@ -40,6 +42,33 @@ const stock = createSlice({
     quoteFailure(state, _action) {
       state.loadingQuote = false;
       state.quote = undefined;
+    },
+
+    stocksToCompareRequest(
+      state,
+      _action: PayloadAction<{
+        name: string;
+        stocks: string[];
+        renderMessage: (title: string, body: string) => void;
+      }>
+    ) {
+      state.stocksToCompare = undefined;
+      state.loadingStocksToCompare = true;
+    },
+
+    stocksToCompareSuccess(
+      state,
+      _action: PayloadAction<{
+        stocksToCompare: { name: string; lastPrice: number; pricedAt: Date }[];
+      }>
+    ) {
+      state.stocksToCompare = _action.payload.stocksToCompare;
+      state.loadingStocksToCompare = false;
+    },
+
+    stocksToCompareFailure(state, _action) {
+      state.loadingStocksToCompare = false;
+      state.stocksToCompare = undefined;
     },
 
     historyRequest(
@@ -119,6 +148,9 @@ export const {
   quoteRequest,
   quoteSuccess,
   quoteFailure,
+  stocksToCompareRequest,
+  stocksToCompareSuccess,
+  stocksToCompareFailure,
   historyRequest,
   historySuccess,
   historyFailure,

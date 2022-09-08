@@ -2,11 +2,17 @@ export interface IInitialState {
   loadingQuote: boolean;
   loadingHistory: boolean;
   loadingProjection: boolean;
+  loadingStocksToCompare: boolean;
   quote?: {
     name: string;
     lastPrice: number;
     pricedAt: Date;
   };
+  stocksToCompare?: {
+    name: string;
+    lastPrice: number;
+    pricedAt: Date;
+  }[];
   history?: {
     minValue: number;
     maxValue: number;

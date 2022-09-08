@@ -11,7 +11,7 @@ export function renderWithProviders(
     preloadedState = {},
     // Automatically create a store instance if no store was passed in
     store = configureStore({
-      reducer: { weather: stockSlice },
+      reducer: { stock: stockSlice },
       preloadedState,
     }),
     ...renderOptions

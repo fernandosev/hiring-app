@@ -147,6 +147,7 @@ const Home: React.FC = () => {
         <StockContainer>
           {!loadingQuote && quote !== undefined && (
             <StockCard
+              testId="stockCard"
               name={quote.name}
               price={quote.lastPrice}
               pricedAt={quote.pricedAt}

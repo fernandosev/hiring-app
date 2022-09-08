@@ -101,6 +101,8 @@ const History: React.FC = () => {
 
           {!loadingHistory && history !== undefined && (
             <StockHistoryChart
+              minValue={history.minValue}
+              maxValue={history.maxValue}
               lowData={history.lowData}
               closingData={history.closingData}
               hightData={history.hightData}
@@ -110,6 +112,7 @@ const History: React.FC = () => {
               startDate={history.startDate}
               endDate={history.endDate}
               zoomDomain={5}
+              lowColor={colors.primary}
             />
           )}
         </StockContainer>

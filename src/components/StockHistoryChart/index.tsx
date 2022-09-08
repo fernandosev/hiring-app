@@ -7,6 +7,7 @@ import {
   VictoryBar,
   VictoryTheme,
   VictoryZoomContainer,
+  VictoryAxis,
 } from "victory-native";
 import moment from "moment";
 
@@ -22,11 +23,13 @@ import { colors } from "~/styles";
 import { Alert } from "react-native";
 
 interface IStackChart {
+  minValue: number;
+  maxValue: number;
   startDate: Date;
   endDate: Date;
-  hightData: { x: Date; y: number }[];
-  closingData: { x: Date; y: number }[];
-  lowData: { x: Date; y: number }[];
+  hightData: { x: Date; y: number; price: number }[];
+  closingData: { x: Date; y: number; price: number }[];
+  lowData: { x: Date; y: number; price: number }[];
   hightLabel: string;
   ClosingLabel: string;
   LowLabel: string;
@@ -37,6 +40,8 @@ interface IStackChart {
 }
 
 const StockHistoryChart: React.FC<IStackChart> = ({
+  minValue,
+  maxValue,
   startDate,
   endDate,
   hightData,
@@ -57,7 +62,7 @@ const StockHistoryChart: React.FC<IStackChart> = ({
       <VictoryChart
         theme={VictoryTheme.material}
         domainPadding={20}
-        domain={{ x: [startDate, endDate] }}
+        domain={{ x: [startDate, endDate], y: [minValue, maxValue] }}
         containerComponent={
           <VictoryZoomContainer
             allowZoom={false}
@@ -68,6 +73,7 @@ const StockHistoryChart: React.FC<IStackChart> = ({
           />
         }
       >
+        {/* <VictoryAxis domain={{x: , y: [0, 1]}}/> */}
         <VictoryStack colorScale={[lowColor, closingColor, hightColor]}>
           <VictoryBar
             barWidth={15}
@@ -79,12 +85,15 @@ const StockHistoryChart: React.FC<IStackChart> = ({
                   onPress: (evt, pressedProps) => {
                     const index = pressedProps.index;
                     const date = lowData[index].x;
-                    const price = lowData[index].y;
+                    const lowPrice = lowData[index].price;
+
+                    const closingPrice = closingData[index].price;
+
+                    const hightPrice = closingData[index].price;
+
                     Alert.alert(
-                      "Low price",
-                      `Date: ${moment(date).format(
-                        "DD/MM/yyyy"
-                      )}\nPrice: ${price}`
+                      `Prices on ${moment(date).format("MMMM DD, yyyy")}`,
+                      `\n\nLow Price: ${lowPrice}\n\nClosing Price: ${closingPrice}\n\nHight Price: ${hightPrice}`
                     );
                   },
                 },
@@ -100,13 +109,16 @@ const StockHistoryChart: React.FC<IStackChart> = ({
                 eventHandlers: {
                   onPress: (evt, pressedProps) => {
                     const index = pressedProps.index;
-                    const date = closingData[index].x;
-                    const price = closingData[index].y;
+                    const date = lowData[index].x;
+                    const lowPrice = lowData[index].price;
+
+                    const closingPrice = closingData[index].price;
+
+                    const hightPrice = closingData[index].price;
+
                     Alert.alert(
-                      "Closing price",
-                      `Date: ${moment(date).format(
-                        "DD/MM/yyyy"
-                      )}\nPrice: ${price}`
+                      `Prices on ${moment(date).format("MMMM DD, yyyy")}`,
+                      `\n\nLow Price: ${lowPrice}\n\nClosing Price: ${closingPrice}\n\nHight Price: ${hightPrice}`
                     );
                   },
                 },
@@ -122,13 +134,16 @@ const StockHistoryChart: React.FC<IStackChart> = ({
                 eventHandlers: {
                   onPress: (evt, pressedProps) => {
                     const index = pressedProps.index;
-                    const date = hightData[index].x;
-                    const price = hightData[index].y;
+                    const date = lowData[index].x;
+                    const lowPrice = lowData[index].price;
+
+                    const closingPrice = closingData[index].price;
+
+                    const hightPrice = closingData[index].price;
+
                     Alert.alert(
-                      "Hight price",
-                      `Date: ${moment(date).format(
-                        "DD/MM/yyyy"
-                      )}\nPrice: ${price}`
+                      `Prices on ${moment(date).format("MMMM DD, yyyy")}`,
+                      `\n\nLow Price: ${lowPrice}\n\nClosing Price: ${closingPrice}\n\nHight Price: ${hightPrice}`
                     );
                   },
                 },

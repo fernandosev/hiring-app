@@ -4,6 +4,8 @@
 
 - [About this project](#-about-this-project)
 - [Layout](#-layout)
+- [Gifs](#gifs)
+- [Prints](#prints)
 - [Running the project](#running-the-project)
 - [Running the tests](#running-the-tests)
 - [Author](#-author)
@@ -24,6 +26,34 @@ A ideia é implementar um app, sem preocupações com dividendos, taxas administ
 Designed with Figma, available in:
 
 - [Hiring App](https://www.figma.com/file/wTU6yZKJw50FQxecQQyhVg/Hiring---AdGrowth?node-id=0%3A1).
+
+## Gifs
+
+#### Home Screen
+
+<img src="https://raw.githubusercontent.com/fernandosev/hiring-app/main/github_assets/home.gif" width="450">
+
+#### History Screen
+
+<img src="https://raw.githubusercontent.com/fernandosev/hiring-app/main/github_assets/history.gif" width="450">
+
+#### Projection Screen
+
+<img src="https://raw.githubusercontent.com/fernandosev/hiring-app/main/github_assets/projection.gif" width="450">
+
+## Prints
+
+#### Home Screen
+
+<img src="https://raw.githubusercontent.com/fernandosev/hiring-app/main/github_assets/home.png" width="250">
+
+#### History Screen
+
+<img src="https://raw.githubusercontent.com/fernandosev/hiring-app/main/github_assets/history1.png" width="250"> <img src="https://raw.githubusercontent.com/fernandosev/hiring-app/main/github_assets/history2.png" width="250">
+
+#### Projection Screen
+
+<img src="https://raw.githubusercontent.com/fernandosev/hiring-app/main/github_assets/projection.png" width="250">
 
 ## Running the project
 

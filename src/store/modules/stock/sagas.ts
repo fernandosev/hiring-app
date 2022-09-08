@@ -16,6 +16,9 @@ import {
   quoteFailure,
   quoteRequest,
   quoteSuccess,
+  stocksToCompareRequest,
+  stocksToCompareSuccess,
+  stocksToCompareFailure,
 } from "./slice";
 
 // Types
@@ -56,6 +59,62 @@ export function* getQuote({
     );
   } catch (err: any) {
     yield put(quoteFailure({}));
+
+    renderMessage("Error", err.response.data.message || "Please try again.");
+  }
+}
+
+export function* getStocksComparison({
+  payload,
+}: {
+  payload: {
+    name: string;
+    stocks: string[];
+    renderMessage: (title: string, body: string) => void;
+  };
+}) {
+  const {
+    name,
+    stocks,
+    renderMessage,
+  }: {
+    name: string;
+    stocks: string[];
+    renderMessage: (title: string, body: string) => void;
+  } = payload;
+
+  try {
+    const response: ResponseGenerator = yield call(
+      api.get,
+      `stocks/${name}/compare`,
+      {
+        params: {
+          stocksToCompare: stocks,
+        },
+      }
+    );
+
+    const data = response.data;
+
+    const formattedData = data.lastPrices.map((stock, index) => {
+      return { ...stock, pricedAt: new Date(stock.pricedAt) };
+    });
+
+    yield put(
+      quoteSuccess({
+        quote: formattedData[0],
+      })
+    );
+
+    formattedData.shift();
+
+    yield put(
+      stocksToCompareSuccess({
+        stocksToCompare: formattedData,
+      })
+    );
+  } catch (err: any) {
+    yield put(stocksToCompareFailure({}));
 
     renderMessage("Error", err.response.data.message || "Please try again.");
   }
@@ -215,4 +274,5 @@ export default all([
   takeLatest(quoteRequest, getQuote),
   takeLatest(historyRequest, getHistory),
   takeLatest(projectionRequest, getStockProjection),
+  takeLatest(stocksToCompareRequest, getStocksComparison),
 ]);

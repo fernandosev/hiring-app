@@ -1,14 +1,19 @@
+import { Alert } from "react-native";
 import React, { useState } from "react";
-import Icon from "~/components/Icon";
 
 // Libs
 
 // Store
 import { useAppDispatch, useAppSelector } from "~/store/hooks";
-import { quoteRequest } from "~/store/modules/stock/slice";
+import {
+  quoteRequest,
+  stocksToCompareRequest,
+} from "~/store/modules/stock/slice";
 
 // Components
 import TextInput from "~/components/TextInput";
+import Button from "~/components/Button";
+import Icon from "~/components/Icon";
 import StockCard from "~/components/StockCard";
 
 // Styles
@@ -25,36 +30,41 @@ import {
   ScrollContainer,
 } from "./styles";
 import { colors } from "~/styles";
-import { Alert } from "react-native";
 
 // @Types
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const loadingQuote = useAppSelector((store) => store.stock.loadingQuote);
+  const loadingStocksToCompare = useAppSelector(
+    (store) => store.stock.loadingStocksToCompare
+  );
   const quote = useAppSelector((store) => store.stock.quote);
+  const stocksToCompare = useAppSelector(
+    (store) => store.stock.stocksToCompare
+  );
 
   const [stock, setStock] = useState("");
 
   const [numberOfStocks, setNumberOfStocks] = useState(0);
 
-  const [stocksToCompare, setStocksToCompare] = useState<string[]>([]);
+  const [stockNamesToCompare, setStockNamesToCompare] = useState<string[]>([]);
 
   const addStockToCompare = () => {
-    const stocks = [...stocksToCompare];
+    const stocks = [...stockNamesToCompare];
 
     stocks.push("");
 
-    setStocksToCompare(stocks);
+    setStockNamesToCompare(stocks);
     setNumberOfStocks(numberOfStocks + 1);
   };
 
   const setStockText = (text: string, index: number) => {
-    const stocks = [...stocksToCompare];
+    const stocks = [...stockNamesToCompare];
 
     stocks[index] = text;
 
-    setStocksToCompare(stocks);
+    setStockNamesToCompare(stocks);
   };
 
   const renderMessage = (title: string, body: string) => {
@@ -86,12 +96,55 @@ const Home: React.FC = () => {
           </SearchStockButton>
         </SearchStockContainer>
 
-        <StockContainer>
-          {loadingQuote && <SearchMessage>Loading Stock</SearchMessage>}
-          {!loadingQuote && !quote && (
-            <SearchMessage>Search a Stock</SearchMessage>
-          )}
+        {loadingQuote && <SearchMessage>Loading Stock</SearchMessage>}
+        {!loadingQuote && !quote && (
+          <SearchMessage>Search a Stock</SearchMessage>
+        )}
 
+        {quote !== undefined && (
+          <AddStockButton onPress={addStockToCompare}>
+            <AddStockText>Add Stock to compare</AddStockText>
+            <AddButton>
+              <Icon name="plus" size={20} />
+            </AddButton>
+          </AddStockButton>
+        )}
+
+        {quote !== undefined &&
+          [...Array(numberOfStocks)].map((item, index) => (
+            <TextInput
+              key={index}
+              autoCapitalize="none"
+              keyboardType="default"
+              autoCorrect={false}
+              onChangeText={(text) => setStockText(text, index)}
+              value={stockNamesToCompare[index]}
+              placeholder="Stock"
+              maxLength={10}
+              titleColor={colors.primary}
+            />
+          ))}
+
+        {quote !== undefined && numberOfStocks > 0 && (
+          <Button
+            name="Search"
+            action={
+              loadingStocksToCompare
+                ? undefined
+                : () =>
+                    dispatch(
+                      stocksToCompareRequest({
+                        name: stock,
+                        stocks: stockNamesToCompare,
+                        renderMessage,
+                      })
+                    )
+            }
+            loading={loadingStocksToCompare}
+          />
+        )}
+
+        <StockContainer>
           {!loadingQuote && quote !== undefined && (
             <StockCard
               name={quote.name}
@@ -100,27 +153,14 @@ const Home: React.FC = () => {
             />
           )}
 
-          {quote !== undefined && (
-            <AddStockButton onPress={addStockToCompare}>
-              <AddStockText>Add Stock to compare</AddStockText>
-              <AddButton>
-                <Icon name="plus" size={20} />
-              </AddButton>
-            </AddStockButton>
-          )}
-
-          {quote !== undefined &&
-            [...Array(numberOfStocks)].map((item, index) => (
-              <TextInput
+          {!loadingStocksToCompare &&
+            stocksToCompare !== undefined &&
+            stocksToCompare?.map((stock, index) => (
+              <StockCard
                 key={index}
-                autoCapitalize="none"
-                keyboardType="default"
-                autoCorrect={false}
-                onChangeText={(text) => setStockText(text, index)}
-                value={stocksToCompare[index]}
-                placeholder="Stock"
-                maxLength={10}
-                titleColor={colors.primary}
+                name={stock.name}
+                price={stock.lastPrice}
+                pricedAt={stock.pricedAt}
               />
             ))}
         </StockContainer>

@@ -8,6 +8,7 @@ export const Container = styled.View`
   border-radius: ${metrics.baseRadiusMedium}px;
   flex-direction: row;
   align-items: center;
+  margin-top: ${metrics.baseMargin}px;
 `;
 
 export const StockNameContainer = styled.View`

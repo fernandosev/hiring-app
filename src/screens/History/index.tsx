@@ -34,36 +34,6 @@ const History: React.FC = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const low = [
-    { x: new Date("2022-07-05"), y: 2 },
-    { x: new Date("2022-07-06"), y: 3 },
-    { x: new Date("2022-07-07"), y: 5 },
-    { x: new Date("2022-07-08"), y: 5 },
-    { x: new Date("2022-07-09"), y: 5 },
-    { x: new Date("2022-07-10"), y: 5 },
-    { x: new Date("2022-07-11"), y: 5 },
-  ];
-
-  const closing = [
-    { x: new Date("2022-07-05"), y: 2 },
-    { x: new Date("2022-07-06"), y: 3 },
-    { x: new Date("2022-07-07"), y: 5 },
-    { x: new Date("2022-07-08"), y: 5 },
-    { x: new Date("2022-07-09"), y: 5 },
-    { x: new Date("2022-07-10"), y: 5 },
-    { x: new Date("2022-07-11"), y: 5 },
-  ];
-
-  const hight = [
-    { x: new Date("2022-07-05"), y: 2 },
-    { x: new Date("2022-07-06"), y: 3 },
-    { x: new Date("2022-07-07"), y: 5 },
-    { x: new Date("2022-07-08"), y: 5 },
-    { x: new Date("2022-07-09"), y: 5 },
-    { x: new Date("2022-07-10"), y: 5 },
-    { x: new Date("2022-07-11"), y: 5 },
-  ];
-
   const renderMessage = (title: string, body: string) => {
     Alert.alert(title, body);
   };

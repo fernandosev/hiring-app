@@ -13,11 +13,17 @@ import {
 interface IStockCard {
   name: string;
   lastPrice: number;
-  pricedAt: Date;
+  pricedAt?: Date;
+  subtitle?: string;
 }
 
-const StockCard: React.FC<IStockCard> = ({ name, lastPrice, pricedAt }) => {
-  const date = moment(pricedAt).format("DD/MM/yyyy");
+const StockCard: React.FC<IStockCard> = ({
+  name,
+  lastPrice,
+  pricedAt,
+  subtitle,
+}) => {
+  const date = pricedAt ? moment(pricedAt).format("DD/MM/yyyy") : undefined;
 
   return (
     <Container>
@@ -25,7 +31,7 @@ const StockCard: React.FC<IStockCard> = ({ name, lastPrice, pricedAt }) => {
         <StockName>{name}</StockName>
       </StockNameContainer>
       <PriceText>{`$ ${lastPrice}`}</PriceText>
-      <DateText>{date}</DateText>
+      <DateText>{date ? date : subtitle}</DateText>
     </Container>
   );
 };

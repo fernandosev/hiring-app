@@ -11,9 +11,10 @@ import { projectionRequest } from "~/store/modules/stock/slice";
 // Components
 import TextInput from "~/components/TextInput";
 import StockCard from "~/components/StockCard";
+import Button from "~/components/Button";
 
 // Styles
-import { Container, ScrollContainer, Button, ButtonText } from "./styles";
+import { Container, ScrollContainer } from "./styles";
 import { colors } from "~/styles";
 
 // @Types
@@ -65,13 +66,14 @@ const Projection: React.FC = () => {
           autoCorrect={false}
           onChangeText={setAmount}
           value={amount}
-          placeholder="End Date - DD/MM/YYYY"
+          placeholder="Amount"
           maxLength={10}
           titleColor={colors.primary}
         />
 
         <Button
-          onPress={
+          name="Search"
+          action={
             loadingProjection
               ? undefined
               : () =>
@@ -84,15 +86,26 @@ const Projection: React.FC = () => {
                     })
                   )
           }
-        >
-          <ButtonText>Search</ButtonText>
-        </Button>
+          loading={loadingProjection}
+        />
 
         {!loadingProjection && projection !== undefined && (
           <>
-            <StockCard name="IBM" lastPrice={200} subtitle="Amount" />
-            <StockCard name="IBM" lastPrice={200} subtitle="Total" />
-            <StockCard name="IBM" lastPrice={200} subtitle="Gain/Loss" />
+            <StockCard
+              name={projection.name}
+              price={projection.amount}
+              subtitle="Amount"
+            />
+            <StockCard
+              name={projection.name}
+              price={projection.total}
+              subtitle="Total"
+            />
+            <StockCard
+              name={projection.name}
+              price={projection.gain_lost}
+              subtitle="Gain/Loss"
+            />
           </>
         )}
       </ScrollContainer>

@@ -12,14 +12,14 @@ import {
 
 interface IStockCard {
   name: string;
-  lastPrice: number;
+  price: number;
   pricedAt?: Date;
   subtitle?: string;
 }
 
 const StockCard: React.FC<IStockCard> = ({
   name,
-  lastPrice,
+  price,
   pricedAt,
   subtitle,
 }) => {
@@ -30,7 +30,7 @@ const StockCard: React.FC<IStockCard> = ({
       <StockNameContainer>
         <StockName>{name}</StockName>
       </StockNameContainer>
-      <PriceText>{`$ ${lastPrice}`}</PriceText>
+      <PriceText numberOfLines={1}>{`$ ${price}`}</PriceText>
       <DateText>{date ? date : subtitle}</DateText>
     </Container>
   );

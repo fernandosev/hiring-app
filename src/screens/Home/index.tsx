@@ -95,7 +95,7 @@ const Home: React.FC = () => {
           {!loadingQuote && quote !== undefined && (
             <StockCard
               name={quote.name}
-              lastPrice={quote.lastPrice}
+              price={quote.lastPrice}
               pricedAt={quote.pricedAt}
             />
           )}

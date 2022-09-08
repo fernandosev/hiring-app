@@ -1,6 +1,7 @@
 export interface IInitialState {
   loadingQuote: boolean;
   loadingHistory: boolean;
+  loadingProjection: boolean;
   quote?: {
     name: string;
     lastPrice: number;
@@ -13,6 +14,13 @@ export interface IInitialState {
     hightData: { x: Date; y: number }[];
     closingData: { x: Date; y: number }[];
     lowData: { x: Date; y: number }[];
+  };
+  projection?: {
+    name: string;
+    date: Date;
+    amount: number;
+    total: number;
+    gain_lost: number;
   };
 }
 

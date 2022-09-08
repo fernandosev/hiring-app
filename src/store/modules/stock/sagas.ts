@@ -10,6 +10,9 @@ import {
   historyFailure,
   historyRequest,
   historySuccess,
+  projectionRequest,
+  projectionFailure,
+  projectionSuccess,
   quoteFailure,
   quoteRequest,
   quoteSuccess,
@@ -131,7 +134,65 @@ export function* getHistory({
   }
 }
 
+export function* getStockProjection({
+  payload,
+}: {
+  payload: {
+    name: string;
+    date: string;
+    amount: number;
+    renderMessage: (title: string, body: string) => void;
+  };
+}) {
+  const {
+    name,
+    date,
+    amount,
+    renderMessage,
+  }: {
+    name: string;
+    date: string;
+    amount: number;
+    renderMessage: (title: string, body: string) => void;
+  } = payload;
+
+  try {
+    const purchasedAt = moment(date, "DD/MM/yyyy");
+    const purchasedString = moment(purchasedAt).format("yyyy-MM-DD");
+
+    const response: ResponseGenerator = yield call(
+      api.get,
+      `stocks/${name}/gains`,
+      {
+        params: {
+          purchasedAmount: amount,
+          purchasedAt: purchasedString,
+        },
+      }
+    );
+
+    const data = response.data;
+
+    yield put(
+      projectionSuccess({
+        projection: {
+          name: data.name,
+          date: new Date(data.purchasedAt),
+          amount: data.purchasedAmount,
+          total: data.capitalGains,
+          gain_lost: data.capitalGains - data.purchasedAmount,
+        },
+      })
+    );
+  } catch (err: any) {
+    yield put(projectionFailure({}));
+
+    renderMessage("Error", err.response.data.message || "Please try again.");
+  }
+}
+
 export default all([
   takeLatest(quoteRequest, getQuote),
   takeLatest(historyRequest, getHistory),
+  takeLatest(projectionRequest, getStockProjection),
 ]);

@@ -51,6 +51,7 @@ const stock = createSlice({
         renderMessage: (title: string, body: string) => void;
       }>
     ) {
+      state.history = undefined;
       state.loadingHistory = true;
     },
 
@@ -58,12 +59,14 @@ const stock = createSlice({
       state,
       _action: PayloadAction<{
         history: {
+          minValue: number;
+          maxValue: number;
           name: string;
           startDate: Date;
           endDate: Date;
-          hightData: { x: Date; y: number }[];
-          closingData: { x: Date; y: number }[];
-          lowData: { x: Date; y: number }[];
+          hightData: { x: Date; y: number; price: number }[];
+          closingData: { x: Date; y: number; price: number }[];
+          lowData: { x: Date; y: number; price: number }[];
         };
       }>
     ) {
@@ -85,6 +88,7 @@ const stock = createSlice({
         renderMessage: (title: string, body: string) => void;
       }>
     ) {
+      state.projection = undefined;
       state.loadingProjection = true;
     },
 

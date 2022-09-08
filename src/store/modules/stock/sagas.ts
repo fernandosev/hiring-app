@@ -105,19 +105,39 @@ export function* getHistory({
 
     const prices = data.prices;
 
-    const hightData: { x: Date; y: number }[] = [];
-    const closingData: { x: Date; y: number }[] = [];
-    const lowData: { x: Date; y: number }[] = [];
+    let minValue = data.prices[0].low;
+    let maxValue = data.prices[0].high;
+
+    const hightData: { x: Date; y: number; price: number }[] = [];
+    const closingData: { x: Date; y: number; price: number }[] = [];
+    const lowData: { x: Date; y: number; price: number }[] = [];
 
     for (const price of prices) {
-      hightData.push({ x: new Date(price.pricedAt), y: price.high });
-      closingData.push({ x: new Date(price.pricedAt), y: price.closing });
-      lowData.push({ x: new Date(price.pricedAt), y: price.low });
+      minValue = minValue > price.low ? price.low : minValue;
+      maxValue = maxValue < price.high ? price.high : maxValue;
+
+      hightData.push({
+        x: new Date(price.pricedAt),
+        y: price.high - price.low,
+        price: price.high,
+      });
+      closingData.push({
+        x: new Date(price.pricedAt),
+        y: price.closing - price.low,
+        price: price.closing,
+      });
+      lowData.push({
+        x: new Date(price.pricedAt),
+        y: price.low,
+        price: price.low,
+      });
     }
 
     yield put(
       historySuccess({
         history: {
+          minValue,
+          maxValue,
           startDate: start.toDate(),
           endDate: end.toDate(),
           name: data.name,

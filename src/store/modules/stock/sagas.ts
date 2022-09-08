@@ -54,7 +54,7 @@ export function* getQuote({
   } catch (err: any) {
     yield put(quoteFailure({}));
 
-    renderMessage("Error", err.response.data.message || "Server error");
+    renderMessage("Error", err.response.data.message || "Please try again.");
   }
 }
 
@@ -127,7 +127,7 @@ export function* getHistory({
   } catch (err: any) {
     yield put(historyFailure({}));
 
-    renderMessage("Error", err.response.data.message || "Server error");
+    renderMessage("Error", err.response.data.message || "Please try again.");
   }
 }
 

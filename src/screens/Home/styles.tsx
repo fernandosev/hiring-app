@@ -6,6 +6,8 @@ export const Container = styled.SafeAreaView<{ backgorund?: string }>`
   margin: ${metrics.basePadding}px;
 `;
 
+export const ScrollContainer = styled.ScrollView``;
+
 export const SearchStockContainer = styled.View`
   flex-direction: row;
   align-items: center;
@@ -23,7 +25,7 @@ export const SearchStockButton = styled.TouchableOpacity`
 
 export const StockContainer = styled.View`
   flex: 1;
-  margin-top: 100px;
+  margin-top: 40px;
 `;
 
 export const SearchMessage = styled.Text`

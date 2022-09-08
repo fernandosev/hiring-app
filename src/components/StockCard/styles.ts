@@ -8,6 +8,7 @@ export const Container = styled.View`
   border-radius: ${metrics.baseRadiusMedium}px;
   flex-direction: row;
   align-items: center;
+  margin-top: ${metrics.baseMargin}px;
 `;
 
 export const StockNameContainer = styled.View`
@@ -28,6 +29,7 @@ export const StockName = styled.Text`
 `;
 
 export const PriceText = styled.Text`
+  flex: 1;
   font-size: 36px;
   font-weight: 300;
   color: ${colors.primaryText};

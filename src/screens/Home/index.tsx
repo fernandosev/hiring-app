@@ -22,6 +22,7 @@ import {
   AddStockButton,
   AddStockText,
   AddButton,
+  ScrollContainer,
 } from "./styles";
 import { colors } from "~/styles";
 import { Alert } from "react-native";
@@ -35,26 +36,26 @@ const Home: React.FC = () => {
 
   const [stock, setStock] = useState("");
 
-  // const [numberOfStocks, setNumberOfStocks] = useState(0);
+  const [numberOfStocks, setNumberOfStocks] = useState(0);
 
-  // const [stocksToCompare, setStocksToCompare] = useState<string[]>([]);
+  const [stocksToCompare, setStocksToCompare] = useState<string[]>([]);
 
-  // const addStockToCompare = () => {
-  //   const stocks = [...stocksToCompare];
+  const addStockToCompare = () => {
+    const stocks = [...stocksToCompare];
 
-  //   stocks.push("");
+    stocks.push("");
 
-  //   setStocksToCompare(stocks);
-  //   setNumberOfStocks(numberOfStocks + 1);
-  // };
+    setStocksToCompare(stocks);
+    setNumberOfStocks(numberOfStocks + 1);
+  };
 
-  // const setStockText = (text: string, index: number) => {
-  //   const stocks = [...stocksToCompare];
+  const setStockText = (text: string, index: number) => {
+    const stocks = [...stocksToCompare];
 
-  //   stocks[index] = text;
+    stocks[index] = text;
 
-  //   setStocksToCompare(stocks);
-  // };
+    setStocksToCompare(stocks);
+  };
 
   const renderMessage = (title: string, body: string) => {
     Alert.alert(title, body);
@@ -62,61 +63,68 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <SearchStockContainer>
-        <InputContainer>
-          <TextInput
-            autoCapitalize="none"
-            keyboardType="default"
-            autoCorrect={false}
-            onChangeText={setStock}
-            value={stock}
-            placeholder="Stock"
-            maxLength={10}
-            titleColor={colors.primary}
-          />
-        </InputContainer>
-        <SearchStockButton
-          onPress={() => dispatch(quoteRequest({ name: stock, renderMessage }))}
-        >
-          <Icon name="magnify" color={colors.primary} size={30} />
-        </SearchStockButton>
-      </SearchStockContainer>
+      <ScrollContainer>
+        <SearchStockContainer>
+          <InputContainer>
+            <TextInput
+              autoCapitalize="none"
+              keyboardType="default"
+              autoCorrect={false}
+              onChangeText={setStock}
+              value={stock}
+              placeholder="Stock"
+              maxLength={10}
+              titleColor={colors.primary}
+            />
+          </InputContainer>
+          <SearchStockButton
+            onPress={() =>
+              dispatch(quoteRequest({ name: stock, renderMessage }))
+            }
+          >
+            <Icon name="magnify" color={colors.primary} size={30} />
+          </SearchStockButton>
+        </SearchStockContainer>
 
-      <StockContainer>
-        {loadingQuote && <SearchMessage>Loading Stock</SearchMessage>}
-        {!loadingQuote && !quote && (
-          <SearchMessage>Search a Stock</SearchMessage>
-        )}
+        <StockContainer>
+          {loadingQuote && <SearchMessage>Loading Stock</SearchMessage>}
+          {!loadingQuote && !quote && (
+            <SearchMessage>Search a Stock</SearchMessage>
+          )}
 
-        {!loadingQuote && quote !== undefined && (
-          <StockCard
-            name={quote.name}
-            lastPrice={quote.lastPrice}
-            pricedAt={quote.pricedAt}
-          />
-        )}
+          {!loadingQuote && quote !== undefined && (
+            <StockCard
+              name={quote.name}
+              price={quote.lastPrice}
+              pricedAt={quote.pricedAt}
+            />
+          )}
 
-        {/* <AddStockButton onPress={addStockToCompare}>
-          <AddStockText>Add Stock to compare</AddStockText>
-          <AddButton>
-            <Icon name="plus" size={20} />
-          </AddButton>
-        </AddStockButton>
+          {quote !== undefined && (
+            <AddStockButton onPress={addStockToCompare}>
+              <AddStockText>Add Stock to compare</AddStockText>
+              <AddButton>
+                <Icon name="plus" size={20} />
+              </AddButton>
+            </AddStockButton>
+          )}
 
-        {[...Array(numberOfStocks)].map((item, index) => (
-          <TextInput
-            key={index}
-            autoCapitalize="none"
-            keyboardType="default"
-            autoCorrect={false}
-            onChangeText={(text) => setStockText(text, index)}
-            value={stocksToCompare[index]}
-            placeholder="Stock"
-            maxLength={10}
-            titleColor={colors.primary}
-          />
-        ))} */}
-      </StockContainer>
+          {quote !== undefined &&
+            [...Array(numberOfStocks)].map((item, index) => (
+              <TextInput
+                key={index}
+                autoCapitalize="none"
+                keyboardType="default"
+                autoCorrect={false}
+                onChangeText={(text) => setStockText(text, index)}
+                value={stocksToCompare[index]}
+                placeholder="Stock"
+                maxLength={10}
+                titleColor={colors.primary}
+              />
+            ))}
+        </StockContainer>
+      </ScrollContainer>
     </Container>
   );
 };

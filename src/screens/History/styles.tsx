@@ -19,19 +19,3 @@ export const SearchMessage = styled.Text`
   color: ${colors.grey3};
   font-size: ${metrics.fontSizeMedium}px;
 `;
-
-export const Button = styled.TouchableOpacity`
-  width: 100%;
-  height: 60px;
-  border-radius: 500px;
-  background-color: ${colors.primary};
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-`;
-
-export const ButtonText = styled.Text`
-  color: ${colors.primaryText};
-  font-size: ${metrics.fontSizeMedium}px;
-  font-weight: bold;
-`;

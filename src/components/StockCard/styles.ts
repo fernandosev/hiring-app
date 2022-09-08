@@ -29,6 +29,7 @@ export const StockName = styled.Text`
 `;
 
 export const PriceText = styled.Text`
+  flex: 1;
   font-size: 36px;
   font-weight: 300;
   color: ${colors.primaryText};

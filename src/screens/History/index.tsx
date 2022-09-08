@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { historyRequest } from "~/store/modules/stock/slice";
 
 // Components
+import Button from "~/components/Button";
 import StockHistoryChart from "~/components/StockHistoryChart";
 import TextInput from "~/components/TextInput";
 
@@ -18,8 +19,6 @@ import {
   ScrollContainer,
   StockContainer,
   SearchMessage,
-  Button,
-  ButtonText,
 } from "./styles";
 import { colors } from "~/styles";
 
@@ -76,7 +75,8 @@ const History: React.FC = () => {
       />
 
       <Button
-        onPress={
+        name="Search"
+        action={
           loadingHistory
             ? undefined
             : () =>
@@ -89,13 +89,12 @@ const History: React.FC = () => {
                   })
                 )
         }
-      >
-        <ButtonText>Search</ButtonText>
-      </Button>
+        loading={loadingHistory}
+      />
 
       <ScrollContainer>
         <StockContainer>
-          {loadingHistory && <SearchMessage>Loading Stock</SearchMessage>}
+          {loadingHistory && <SearchMessage>Loading Data</SearchMessage>}
           {!loadingHistory && !history && (
             <SearchMessage>Search a Stock</SearchMessage>
           )}

@@ -6,8 +6,10 @@ import { IInitialState } from "./types";
 const initialState = {
   loadingQuote: false,
   loadingHistory: false,
+  loadingProjection: false,
   quote: undefined,
   history: undefined,
+  projection: undefined,
 } as IInitialState;
 
 const stock = createSlice({
@@ -21,6 +23,7 @@ const stock = createSlice({
         renderMessage: (title: string, body: string) => void;
       }>
     ) {
+      state.quote = undefined;
       state.loadingQuote = true;
     },
 
@@ -69,7 +72,40 @@ const stock = createSlice({
     },
 
     historyFailure(state, _action) {
-      state.loadingQuote = false;
+      state.loadingHistory = false;
+      state.quote = undefined;
+    },
+
+    projectionRequest(
+      state,
+      _action: PayloadAction<{
+        name: string;
+        date: string;
+        amount: number;
+        renderMessage: (title: string, body: string) => void;
+      }>
+    ) {
+      state.loadingProjection = true;
+    },
+
+    projectionSuccess(
+      state,
+      _action: PayloadAction<{
+        projection: {
+          name: string;
+          date: Date;
+          amount: number;
+          total: number;
+          gain_lost: number;
+        };
+      }>
+    ) {
+      state.projection = _action.payload.projection;
+      state.loadingProjection = false;
+    },
+
+    projectionFailure(state, _action) {
+      state.loadingProjection = false;
       state.quote = undefined;
     },
   },
@@ -82,5 +118,8 @@ export const {
   historyRequest,
   historySuccess,
   historyFailure,
+  projectionRequest,
+  projectionSuccess,
+  projectionFailure,
 } = stock.actions;
 export default stock.reducer;

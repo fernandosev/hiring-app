@@ -14,7 +14,7 @@ const Button: React.FC<IButton> = ({ name, loading, action }) => {
   return (
     <Container onPress={action}>
       {loading && <ActivityIndicator color={colors.secondary} />}
-      {!loading && <ButtonText>{name}</ButtonText>}
+      {!loading && <ButtonText testID="buttonName">{name}</ButtonText>}
     </Container>
   );
 };

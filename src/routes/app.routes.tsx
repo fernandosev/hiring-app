@@ -1,5 +1,11 @@
 import * as React from "react";
-import { StyleSheet, TouchableHighlight, View, Text } from "react-native";
+import {
+  StyleSheet,
+  TouchableHighlight,
+  View,
+  Text,
+  Platform,
+} from "react-native";
 
 // Libs
 import { NavigationContainer } from "@react-navigation/native";
@@ -48,7 +54,8 @@ export default function AppRoutes() {
         screenOptions={() => ({
           tabBarStyle: {
             backgroundColor: colors.primary,
-            height: 100,
+            height: Platform.OS === "ios" ? 100 : 75,
+            paddingTop: Platform.OS === "ios" ? 15 : 0,
           },
           headerShown: false,
         })}

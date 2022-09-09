@@ -1,17 +1,17 @@
-import React from 'react';
-import {ViewProps} from 'react-native';
-import Icon from '~/components/Icon';
-import {colors} from '~/styles';
+import React from "react";
+import { ViewProps } from "react-native";
+import Icon from "~/components/Icon";
+import { colors } from "~/styles";
 
-import {Container, Text} from './styles';
+import { Container, Text } from "./styles";
 
 const InputErrorMessage: React.FC<
   {
     message?: string;
   } & ViewProps
-> = ({message = '', ...rest}) => {
+> = ({ message = "", ...rest }) => {
   return (
-    <Container {...rest}>
+    <Container testID="errorMessage" {...rest}>
       {!!message && (
         <>
           <Icon name="close-circle-outline" size={20} color={colors.danger} />

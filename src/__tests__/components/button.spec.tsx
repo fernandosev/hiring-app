@@ -4,7 +4,7 @@ import { render } from "@testing-library/react-native";
 
 import Button from "~/components/Button";
 
-describe("Header", () => {
+describe("Button Component", () => {
   test("if button name is hidden if loading is true", () => {
     const { getByTestId } = render(
       <Button name="Test Button" action={() => {}} loading={true} />

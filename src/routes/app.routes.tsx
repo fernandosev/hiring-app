@@ -54,7 +54,7 @@ export default function AppRoutes() {
         screenOptions={() => ({
           tabBarStyle: {
             backgroundColor: colors.primary,
-            height: Platform.OS === "ios" ? 100 : 75,
+            height: Platform.OS === "ios" ? 100 : 85,
             paddingTop: Platform.OS === "ios" ? 15 : 0,
           },
           headerShown: false,
